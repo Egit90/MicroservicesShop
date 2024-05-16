@@ -22,7 +22,7 @@ public sealed class GetProductByCategoryQueryHandler(
                                     .Where(x => x.Category.Contains(request.Category))
                                     .ToListAsync(cancellationToken);
 
-        if (product == null)
+        if (product == null || product.Count == 0)
         {
             return new Result<IReadOnlyList<Product>>(new ProductNotFoundException());
         }
