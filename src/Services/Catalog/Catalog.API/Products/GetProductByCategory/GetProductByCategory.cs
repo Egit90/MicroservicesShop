@@ -1,36 +1,26 @@
 using BuildingBlocks.CQRS;
-using Catalog.API.Exceptions;
+using Carter;
 using Catalog.API.Models;
-using LanguageExt;
 using LanguageExt.Common;
-using Marten;
+using MediatR;
 
 namespace Catalog.API.Products.GetProductByCategory;
 
 public sealed record GetProductByCategoryQuery(string Category) : IQuery<Result<IReadOnlyList<Product>>>;
 
 
-
-public sealed class GetProductByCategoryQueryHandler(
-    IDocumentSession session,
-    ILogger<GetProductByCategoryQueryHandler> logger) : IQueryHandler<GetProductByCategoryQuery, Result<IReadOnlyList<Product>>>
+public sealed class GetProductByCategoryEndPoint : ICarterModule
 {
-    private readonly IDocumentSession _session = session;
-    private readonly ILogger<GetProductByCategoryQueryHandler> _logger = logger;
-
-    public async Task<Result<IReadOnlyList<Product>>> Handle(GetProductByCategoryQuery request, CancellationToken cancellationToken)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        _logger.LogInformation("Trying to find product with category {@cat}", request.Category);
-
-        var product = await _session.Query<Product>()
-                                    .Where(x => x.Category.Contains(request.Category))
-                                    .ToListAsync(cancellationToken);
-
-        if (product == null)
+        app.MapGet("/products/{category}", async (string category, ISender sender) =>
         {
-            return new Result<IReadOnlyList<Product>>(new ProductNotFoundException());
-        }
+            var res = await sender.Send(new GetProductByCategoryQuery(category));
 
-        return product;
+            return res.Match(
+                a => Results.Ok(a),
+                b => Results.NotFound(b.Message)
+            );
+        });
     }
 }
