@@ -11,3 +11,6 @@ public sealed record UpdateProductCommand(
      string ImageFile,
      decimal Price
 ) : ICommand<Result<Guid>>;
+
+
+

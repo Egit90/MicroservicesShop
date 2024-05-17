@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace Catalog.API.Products.CreateProduct;
+namespace Catalog.API.Products.UpdateProduct;
 
-public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
 {
-    public CreateProductCommandValidator()
+    public UpdateProductCommandValidator()
     {
-        RuleFor(x => x.Name).NotEmpty().WithMessage("Name Must Not Be Empty");
-        RuleFor(x => x.Name).NotNull().WithMessage("Name Must Not Be Empty");
+        RuleFor(x => x.Name).NotEmpty().WithMessage("Name Must Not Be Empty").MinimumLength(4);
         RuleFor(x => x.Category).NotEmpty().WithMessage("Category Must Not be Null");
         RuleFor(x => x.Description).NotEmpty().WithMessage("Name Must Not Be Empty");
         RuleFor(x => x.ImageFile).NotEmpty().WithMessage("Name Must Not Be Empty");
