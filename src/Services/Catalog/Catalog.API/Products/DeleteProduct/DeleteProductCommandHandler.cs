@@ -16,7 +16,7 @@ public sealed class DeleteProductCommandHandler(IDocumentSession _session, ILogg
 
         if (products == null)
         {
-            return new Result<bool>(new ProductNotFoundException());
+            return new Result<bool>(new ProductNotFoundException(request.Id));
         }
 
         _session.Delete(products);

@@ -19,7 +19,7 @@ public sealed class UpdateProductCommandHandler(
 
         if (product == null)
         {
-            return new Result<Guid>(new ProductNotFoundException());
+            return new Result<Guid>(new ProductNotFoundException(request.Id));
         }
         product.Name = request.Name;
         product.Category = request.Category;

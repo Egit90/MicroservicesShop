@@ -17,7 +17,7 @@ public sealed class GetProductByIdQueryHandler(IDocumentSession _session, ILogge
 
         if (product == null)
         {
-            return new Result<Product>(new ProductNotFoundException());
+            return new Result<Product>(new ProductNotFoundException(request.Id));
         }
 
         return product;

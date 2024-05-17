@@ -21,7 +21,7 @@ public sealed class GetProductByCategoryQueryHandler(
 
         if (product == null || product.Count == 0)
         {
-            return new Result<IReadOnlyList<Product>>(new ProductNotFoundException());
+            return new Result<IReadOnlyList<Product>>(new ProductNotFoundException(request.Category));
         }
 
         return new Result<IReadOnlyList<Product>>(product);
