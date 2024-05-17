@@ -6,11 +6,8 @@ using Marten;
 
 namespace Catalog.API.Products.DeleteProduct;
 
-public sealed class DeleteProductCommandHandler(IDocumentSession session, ILogger<DeleteProductCommandHandler> logger) : ICommandHandler<DeleteProductCommand, Result<bool>>
+public sealed class DeleteProductCommandHandler(IDocumentSession _session, ILogger<DeleteProductCommandHandler> _logger) : ICommandHandler<DeleteProductCommand, Result<bool>>
 {
-    private readonly IDocumentSession _session = session;
-    private readonly ILogger<DeleteProductCommandHandler> _logger = logger;
-
     public async Task<Result<bool>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Deleting The Record With Id {@Id}", request.Id);

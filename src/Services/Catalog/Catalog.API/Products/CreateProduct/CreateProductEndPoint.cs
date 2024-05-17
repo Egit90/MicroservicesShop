@@ -10,10 +10,15 @@ public sealed class CreateProductEndPoint : ICarterModule
         app.MapPost("/products", async (CreateProductCommand command, ISender sender) =>
         {
             var res = await sender.Send(command);
-            return Results.Created($"/products/{res.ID}", res);
+
+            return res.Match(
+                a => Results.Created($"/products/{a}", res),
+                b => Results.BadRequest(b)
+            );
+
         })
         .WithName("CreateProduct")
-        .Produces<CreateProductResult>(StatusCodes.Status201Created)
+        .Produces<Guid>(StatusCodes.Status201Created)
         .WithSummary("Create Product")
         .WithDescription("Create Product");
     }

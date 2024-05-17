@@ -8,11 +8,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Catalog.API.Products.GetProductById;
 
-public sealed class GetProductByIdQueryHandler(IDocumentSession session, ILogger<GetProductByIdQueryHandler> logger) : IQueryHandler<GetProductByIdQuery, Result<Product>>
+public sealed class GetProductByIdQueryHandler(IDocumentSession _session, ILogger<GetProductByIdQueryHandler> _logger) : IQueryHandler<GetProductByIdQuery, Result<Product>>
 {
-    private readonly IDocumentSession _session = session;
-    private readonly ILogger<GetProductByIdQueryHandler> _logger = logger;
-
     public async Task<Result<Product>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Looking for the record with id number {@q}", request.Id);

@@ -7,13 +7,10 @@ using Marten;
 namespace Catalog.API.Products.UpdateProduct;
 
 public sealed class UpdateProductCommandHandler(
-    IDocumentSession document,
-    ILogger<UpdateProductCommandHandler> logger
+    IDocumentSession _document,
+    ILogger<UpdateProductCommandHandler> _logger
 ) : ICommandHandler<UpdateProductCommand, Result<Guid>>
 {
-    private readonly IDocumentSession _document = document;
-    private readonly ILogger<UpdateProductCommandHandler> _logger = logger;
-
     public async Task<Result<Guid>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Updating Record With Id Of {@Id}", request.Id);

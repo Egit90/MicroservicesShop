@@ -8,12 +8,9 @@ using Marten;
 namespace Catalog.API.Products.GetProductByCategory;
 
 public sealed class GetProductByCategoryQueryHandler(
-    IDocumentSession session,
-    ILogger<GetProductByCategoryQueryHandler> logger) : IQueryHandler<GetProductByCategoryQuery, Result<IReadOnlyList<Product>>>
+    IDocumentSession _session,
+    ILogger<GetProductByCategoryQueryHandler> _logger) : IQueryHandler<GetProductByCategoryQuery, Result<IReadOnlyList<Product>>>
 {
-    private readonly IDocumentSession _session = session;
-    private readonly ILogger<GetProductByCategoryQueryHandler> _logger = logger;
-
     public async Task<Result<IReadOnlyList<Product>>> Handle(GetProductByCategoryQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Trying to find product with category {@cat}", request.Category);

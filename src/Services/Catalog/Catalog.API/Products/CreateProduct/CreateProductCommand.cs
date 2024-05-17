@@ -1,4 +1,6 @@
+using System.Data;
 using BuildingBlocks.CQRS;
+using LanguageExt.Common;
 
 namespace Catalog.API.Products.CreateProduct;
 
@@ -8,4 +10,4 @@ public record CreateProductCommand(
      string Description,
      string ImageFile,
      decimal Price
-) : ICommand<CreateProductResult>;
+) : ICommand<Result<Guid>>;

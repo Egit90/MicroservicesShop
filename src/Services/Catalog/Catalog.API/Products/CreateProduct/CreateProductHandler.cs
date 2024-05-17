@@ -1,15 +1,26 @@
 using BuildingBlocks.CQRS;
 using Catalog.API.Models;
+using FluentValidation;
+using LanguageExt.Common;
 using Marten;
 
 namespace Catalog.API.Products.CreateProduct;
 
-internal sealed class CreateProductHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal sealed class CreateProductHandler(IDocumentSession session, IValidator<CreateProductCommand> validator)
+					: ICommandHandler<CreateProductCommand, Result<Guid>>
 {
-	private readonly IDocumentSession _session = session;
-
-	public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
+	public async Task<Result<Guid>> Handle(CreateProductCommand command, CancellationToken cancellationToken)
 	{
+
+		var res = await validator.ValidateAsync(command, cancellationToken);
+
+		if (!res.IsValid)
+		{
+			string ErrorMessage = string.Join(", ", res.Errors.Select(x => x.ErrorMessage).ToList());
+			return new Result<Guid>(new ValidationException(ErrorMessage));
+		}
+
+
 		// Create Product Entity from the command
 		Product product = new()
 		{
@@ -21,10 +32,10 @@ internal sealed class CreateProductHandler(IDocumentSession session) : ICommandH
 		};
 
 		// Save to DB. using Marten
-		_session.Store(product);
-		await _session.SaveChangesAsync(cancellationToken);
+		session.Store(product);
+		await session.SaveChangesAsync(cancellationToken);
 
 		// Return CreateProductResult result
-		return new CreateProductResult(product.Id);
+		return product.Id;
 	}
 }
