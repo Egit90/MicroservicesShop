@@ -6,14 +6,10 @@ using Marten;
 
 namespace Catalog.API.Products.UpdateProduct;
 
-public sealed class UpdateProductCommandHandler(
-    IDocumentSession _document,
-    ILogger<UpdateProductCommandHandler> _logger
-) : ICommandHandler<UpdateProductCommand, ErrorOr<Guid>>
+public sealed class UpdateProductCommandHandler(IDocumentSession _document) : ICommandHandler<UpdateProductCommand, ErrorOr<Guid>>
 {
     public async Task<ErrorOr<Guid>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Updating Record With Id Of {@Id}", request.Id);
 
         var product = await _document.LoadAsync<Product>(request.Id, cancellationToken);
 

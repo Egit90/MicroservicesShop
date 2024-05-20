@@ -7,12 +7,11 @@ using Marten;
 namespace Catalog.API.Products.GetProductByCategory;
 
 public sealed class GetProductByCategoryQueryHandler(
-    IDocumentSession _session,
-    ILogger<GetProductByCategoryQueryHandler> _logger) : IQueryHandler<GetProductByCategoryQuery, ErrorOr<IReadOnlyList<Product>>>
+    IDocumentSession _session
+  ) : IQueryHandler<GetProductByCategoryQuery, ErrorOr<IReadOnlyList<Product>>>
 {
     public async Task<ErrorOr<IReadOnlyList<Product>>> Handle(GetProductByCategoryQuery request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Trying to find product with category {@cat}", request.Category);
 
         var product = await _session.Query<Product>()
                                     .Where(x => x.Category.Contains(request.Category))
