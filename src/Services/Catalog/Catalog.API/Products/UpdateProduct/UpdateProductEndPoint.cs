@@ -1,3 +1,4 @@
+using BuildingBlocks.Exceptions.Handler;
 using Carter;
 using MediatR;
 
@@ -13,7 +14,7 @@ public sealed class UpdateProductEndPoint : ICarterModule
 
             return res.Match(
                 a => Results.Ok(a),
-                b => Results.NotFound(b)
+                error => Results.Problem(HandledExceptionResponse.Create(error, "UpdateProductEndPoint"))
             );
         })
         .WithName("UpdateProductEndPoint")

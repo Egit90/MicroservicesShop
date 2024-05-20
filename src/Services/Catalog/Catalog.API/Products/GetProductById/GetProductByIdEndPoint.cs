@@ -1,3 +1,4 @@
+using BuildingBlocks.Exceptions.Handler;
 using Carter;
 using Catalog.API.Models;
 using MediatR;
@@ -14,11 +15,10 @@ public sealed class GetProductByIdEndPoint() : ICarterModule
             if (Guid.TryParse(Id, out Guid Id2))
             {
                 var products = await Sender.Send(new GetProductByIdQuery(Id2));
-                return products.Match(x => Results.Ok(x), e =>
-                {
-                    if (e.Message == "Not Found") return Results.NotFound("");
-                    return TypedResults.BadRequest(e.Message);
-                });
+                return products.Match(
+                        value => Results.Ok(value),
+                        error => Results.Problem(HandledExceptionResponse.Create(error, "GetProductById"))
+                        );
             }
             return Results.BadRequest("Id Must be a Guid");
         })

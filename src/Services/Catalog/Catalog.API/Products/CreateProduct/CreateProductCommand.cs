@@ -1,6 +1,5 @@
-using System.Data;
 using BuildingBlocks.CQRS;
-using LanguageExt.Common;
+using ErrorOr;
 
 namespace Catalog.API.Products.CreateProduct;
 
@@ -10,4 +9,4 @@ public record CreateProductCommand(
      string Description,
      string ImageFile,
      decimal Price
-) : ICommand<Result<Guid>>;
+) : ICommand<ErrorOr<Guid>>;

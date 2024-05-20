@@ -1,9 +1,8 @@
 using BuildingBlocks.CQRS;
 using Catalog.API.Models;
-using FluentValidation;
-using LanguageExt.Common;
+using ErrorOr;
 
 namespace Catalog.API.Products.GetProductByCategory;
 
-public sealed record GetProductByCategoryQuery(string Category) : IQuery<Result<IReadOnlyList<Product>>>;
+public sealed record GetProductByCategoryQuery(string Category) : IQuery<ErrorOr<IReadOnlyList<Product>>>;
 

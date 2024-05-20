@@ -1,7 +1,7 @@
 using BuildingBlocks.CQRS;
 using Catalog.API.Exceptions;
 using Catalog.API.Models;
-using LanguageExt.Common;
+using ErrorOr;
 using Marten;
 
 namespace Catalog.API.Products.UpdateProduct;
@@ -9,9 +9,9 @@ namespace Catalog.API.Products.UpdateProduct;
 public sealed class UpdateProductCommandHandler(
     IDocumentSession _document,
     ILogger<UpdateProductCommandHandler> _logger
-) : ICommandHandler<UpdateProductCommand, Result<Guid>>
+) : ICommandHandler<UpdateProductCommand, ErrorOr<Guid>>
 {
-    public async Task<Result<Guid>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Guid>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Updating Record With Id Of {@Id}", request.Id);
 
@@ -19,7 +19,7 @@ public sealed class UpdateProductCommandHandler(
 
         if (product == null)
         {
-            return new Result<Guid>(new ProductNotFoundException(request.Id));
+            return CustomErrors.ProductNotFound(request.Id);
         }
         product.Name = request.Name;
         product.Category = request.Category;

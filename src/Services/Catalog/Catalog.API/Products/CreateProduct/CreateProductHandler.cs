@@ -1,14 +1,13 @@
 using BuildingBlocks.CQRS;
 using Catalog.API.Models;
-using FluentValidation;
-using LanguageExt.Common;
+using ErrorOr;
 using Marten;
 
 namespace Catalog.API.Products.CreateProduct;
 
-internal sealed class CreateProductHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, Result<Guid>>
+internal sealed class CreateProductHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, ErrorOr<Guid>>
 {
-	public async Task<Result<Guid>> Handle(CreateProductCommand command, CancellationToken cancellationToken)
+	public async Task<ErrorOr<Guid>> Handle(CreateProductCommand command, CancellationToken cancellationToken)
 	{
 		Product product = new()
 		{
@@ -23,7 +22,7 @@ internal sealed class CreateProductHandler(IDocumentSession session) : ICommandH
 		session.Store(product);
 		await session.SaveChangesAsync(cancellationToken);
 
-		// Return CreateProductResult result
+		// Return CreateProductErrorOr result
 		return product.Id;
 	}
 }

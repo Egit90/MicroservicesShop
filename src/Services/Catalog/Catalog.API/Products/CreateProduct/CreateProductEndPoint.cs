@@ -1,3 +1,4 @@
+using BuildingBlocks.Exceptions.Handler;
 using Carter;
 using MediatR;
 
@@ -12,8 +13,8 @@ public sealed class CreateProductEndPoint : ICarterModule
             var res = await sender.Send(command);
 
             return res.Match(
-                a => Results.Created($"/products/{a}", res),
-                b => Results.BadRequest(b)
+                value => Results.Created($"/products/{value}", res.Value),
+                error => Results.Problem(HandledExceptionResponse.Create(error, "CreateProduct"))
             );
 
         })

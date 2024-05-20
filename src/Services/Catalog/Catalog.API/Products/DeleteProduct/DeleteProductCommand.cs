@@ -1,6 +1,6 @@
 using BuildingBlocks.CQRS;
-using LanguageExt.Common;
+using ErrorOr;
 
 namespace Catalog.API.Products.DeleteProduct;
 
-public sealed record DeleteProductCommand(Guid Id) : ICommand<Result<bool>>;
+public sealed record DeleteProductCommand(Guid Id) : ICommand<ErrorOr<bool>>;

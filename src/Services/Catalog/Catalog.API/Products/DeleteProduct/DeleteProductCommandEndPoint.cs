@@ -1,5 +1,7 @@
 using Carter;
 using MediatR;
+using ErrorOr;
+using BuildingBlocks.Exceptions.Handler;
 
 namespace Catalog.API.Products.DeleteProduct;
 
@@ -11,9 +13,9 @@ public sealed class DeleteProductCommandEndPoint : ICarterModule
         {
             var res = await sender.Send(new DeleteProductCommand(Id));
             return res.Match(
-                a => Results.Ok(a),
-                b => Results.NotFound(b.Message)
-            );
+                value => Results.Ok(value),
+                error => Results.Problem(HandledExceptionResponse.Create(error, "DeleteProductCommand"))
+                );
         })
         .WithName("DeleteProductCommand")
         .Produces<Guid>(StatusCodes.Status200OK)

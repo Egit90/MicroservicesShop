@@ -1,17 +1,16 @@
 using BuildingBlocks.CQRS;
 using Catalog.API.Exceptions;
 using Catalog.API.Models;
-using LanguageExt;
-using LanguageExt.Common;
+using ErrorOr;
 using Marten;
 
 namespace Catalog.API.Products.GetProductByCategory;
 
 public sealed class GetProductByCategoryQueryHandler(
     IDocumentSession _session,
-    ILogger<GetProductByCategoryQueryHandler> _logger) : IQueryHandler<GetProductByCategoryQuery, Result<IReadOnlyList<Product>>>
+    ILogger<GetProductByCategoryQueryHandler> _logger) : IQueryHandler<GetProductByCategoryQuery, ErrorOr<IReadOnlyList<Product>>>
 {
-    public async Task<Result<IReadOnlyList<Product>>> Handle(GetProductByCategoryQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<IReadOnlyList<Product>>> Handle(GetProductByCategoryQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Trying to find product with category {@cat}", request.Category);
 
@@ -21,9 +20,9 @@ public sealed class GetProductByCategoryQueryHandler(
 
         if (product == null || product.Count == 0)
         {
-            return new Result<IReadOnlyList<Product>>(new ProductNotFoundException(request.Category));
+            return CustomErrors.ProductNotFound(request.Category);
         }
 
-        return new Result<IReadOnlyList<Product>>(product);
+        return product.ToArray();
     }
 }

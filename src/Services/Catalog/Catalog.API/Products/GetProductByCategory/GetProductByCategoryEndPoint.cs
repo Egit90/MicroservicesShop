@@ -1,3 +1,4 @@
+using BuildingBlocks.Exceptions.Handler;
 using Carter;
 using Catalog.API.Models;
 using MediatR;
@@ -13,11 +14,11 @@ public sealed class GetProductByCategoryEndPoint : ICarterModule
             var res = await sender.Send(new GetProductByCategoryQuery(category));
 
             return res.Match(
-                a => Results.Ok(a),
-                b => Results.NotFound(b.Message)
+                value => Results.Ok(value),
+             error => Results.Problem(HandledExceptionResponse.Create(error, "GetProductByCategory"))
             );
         })
-                 .WithName("GetProductByCategory")
+        .WithName("GetProductByCategory")
         .Produces<IEnumerable<Product>>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Get Product By Category")

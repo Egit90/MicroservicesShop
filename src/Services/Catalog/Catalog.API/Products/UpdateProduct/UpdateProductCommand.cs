@@ -1,5 +1,5 @@
 using BuildingBlocks.CQRS;
-using LanguageExt.Common;
+using ErrorOr;
 
 namespace Catalog.API.Products.UpdateProduct;
 
@@ -10,7 +10,7 @@ public sealed record UpdateProductCommand(
      string Description,
      string ImageFile,
      decimal Price
-) : ICommand<Result<Guid>>;
+) : ICommand<ErrorOr<Guid>>;
 
 
 
