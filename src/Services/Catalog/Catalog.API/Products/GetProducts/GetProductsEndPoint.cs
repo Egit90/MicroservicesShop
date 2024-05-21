@@ -1,7 +1,6 @@
 using Carter;
 using Catalog.API.Models;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.API.Products.GetProducts;
 
@@ -9,9 +8,9 @@ public sealed class GetProductsEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/products", async (ISender sender) =>
+        app.MapGet("/products", async ([AsParameters] GetProductsQuery request, ISender sender) =>
         {
-            var res = await sender.Send(new GetProductsQuery());
+            var res = await sender.Send(request);
             return Results.Ok(res);
         })
         .WithName("GetProducts")
