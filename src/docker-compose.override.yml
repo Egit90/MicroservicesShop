@@ -12,3 +12,19 @@ services:
       - "5432:5432"
     volumes:
       - postgres_catalog:/var/lib/postgressql/data/
+
+  catalog.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8081;http://+:8080
+      - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;Password=MySu]]erP@ss;User Id=appUser;Include Error Detail=true
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    depends_on:
+      - catalogdb
+    ports:
+      - "6000:8080"
+      - "6060:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/userSecrets:ro
+      - ./https:/https:ro
