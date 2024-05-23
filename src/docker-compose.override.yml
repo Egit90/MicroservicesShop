@@ -27,4 +27,4 @@ services:
       - "6060:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/userSecrets:ro
-      - ./https:/https:ro
+      - ~/.aspnet/https:/https:ro
