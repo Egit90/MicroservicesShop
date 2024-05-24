@@ -1,16 +1,18 @@
+using Basket.API.Data;
 using BuildingBlocks.CQRS;
 
 namespace Basket.API.Basket.StoreBasket;
 
-public sealed class StoreBasketCommandHandler : ICommandHandler<StoreBasketCommand, string>
+public sealed class StoreBasketCommandHandler(IBasketRepository repository) : ICommandHandler<StoreBasketCommand, string>
 {
-    public Task<string> Handle(StoreBasketCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(StoreBasketCommand request, CancellationToken cancellationToken)
     {
         var cart = request.Cart;
 
         // store Basket in db
-        // update cache
+        var res = await repository.StoreBasket(cart, cancellationToken);
 
-        return Task.FromResult("test");
+        // update cache
+        return request.Cart.UserName;
     }
 }

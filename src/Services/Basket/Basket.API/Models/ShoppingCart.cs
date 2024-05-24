@@ -1,3 +1,5 @@
+using Marten.Schema;
+
 namespace Basket.API.Models;
 
 public sealed class ShoppingCart

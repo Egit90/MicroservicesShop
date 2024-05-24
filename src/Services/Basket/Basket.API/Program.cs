@@ -1,5 +1,8 @@
+using Basket.API.Data;
+using Basket.API.Models;
 using BuildingBlocks.Behaviors;
 using Carter;
+using Marten;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,19 @@ builder.Services.AddMediatR(c =>
 });
 
 
+
+builder.Services.AddMarten(opts =>
+{
+    var MartinConnectionString = builder.Configuration.GetConnectionString("DataBase")
+                                ?? throw new InvalidOperationException("Connection string Not Found");
+
+    opts.Connection(MartinConnectionString);
+    opts.Schema.For<ShoppingCart>().Identity(x => x.UserName);
+
+}).UseLightweightSessions();
+
+
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 var app = builder.Build();
 

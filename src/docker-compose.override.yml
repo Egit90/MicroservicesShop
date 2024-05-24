@@ -1,6 +1,7 @@
 version: "3.9"
 
 services:
+  # Catalog
   catalogdb:
     container_name: catalogdb
     environment:
@@ -28,3 +29,16 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/userSecrets:ro
       - ~/.aspnet/https:/https:ro
+
+  # Basket
+  basketdb:
+    container_name: basketdb
+    environment:
+      - POSTGRES_PASSWORD=MySu]]erP@ss
+      - POSTGRES_USER=appUser
+      - POSTGRES_DB=Basketdb
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_basket:/var/lib/postgressql/data/
