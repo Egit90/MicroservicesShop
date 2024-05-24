@@ -14,7 +14,7 @@ public sealed class UpdateProductEndPoint : ICarterModule
 
             return res.Match(
                 a => Results.Ok(a),
-                error => Results.Problem(HandledExceptionResponse.Create(error, "UpdateProductEndPoint"))
+                error => Results.Problem(error.ToProblemDetail("UpdateProductEndPoint"))
             );
         })
         .WithName("UpdateProductEndPoint")

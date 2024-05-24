@@ -14,7 +14,7 @@ public sealed class DeleteProductCommandEndPoint : ICarterModule
             var res = await sender.Send(new DeleteProductCommand(Id));
             return res.Match(
                 value => Results.Ok(value),
-                error => Results.Problem(HandledExceptionResponse.Create(error, "DeleteProductCommand"))
+                error => Results.Problem(error.ToProblemDetail("DeleteProductCommand"))
                 );
         })
         .WithName("DeleteProductCommand")

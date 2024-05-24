@@ -15,7 +15,7 @@ public sealed class GetBasketEndPoint : ICarterModule
 
             return res.Match(
                 value => Results.Ok(value),
-                error => Results.Problem(HandledExceptionResponse.Create(error, "GetBasketEndPoint"))
+                error => Results.Problem(error.ToProblemDetail("GetBasketEndPoint"))
             );
         })
         .WithName("GetBasket")

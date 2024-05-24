@@ -17,7 +17,7 @@ public sealed class GetProductByIdEndPoint() : ICarterModule
                 var products = await Sender.Send(new GetProductByIdQuery(Id2));
                 return products.Match(
                         value => Results.Ok(value),
-                        error => Results.Problem(HandledExceptionResponse.Create(error, "GetProductById"))
+                        error => Results.Problem(error.ToProblemDetail("GetProductById"))
                         );
             }
             return Results.BadRequest("Id Must be a Guid");

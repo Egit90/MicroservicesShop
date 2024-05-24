@@ -14,7 +14,7 @@ public sealed class CreateProductEndPoint : ICarterModule
 
             return res.Match(
                 value => Results.Created($"/products/{value}", res.Value),
-                error => Results.Problem(HandledExceptionResponse.Create(error, "CreateProduct"))
+                error => Results.Problem(error.ToProblemDetail("CreateProduct"))
             );
 
         })

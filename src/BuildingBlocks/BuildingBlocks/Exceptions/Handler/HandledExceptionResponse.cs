@@ -6,12 +6,13 @@ namespace BuildingBlocks.Exceptions.Handler;
 
 public static class HandledExceptionResponse
 {
-    public static ProblemDetails Create(List<Error> errorList, string Instance) => new()
+
+    public static ProblemDetails ToProblemDetail(this List<Error> me, string routeName) => new()
     {
-        Title = errorList.First().Type.ToString(),
-        Detail = string.Join(", ", errorList.Select(x => x.Description)),
-        Instance = Instance,
-        Status = errorList.First().Type switch
+        Title = me.First().Type.ToString(),
+        Detail = string.Join(", ", me.Select(x => x.Description)),
+        Instance = routeName,
+        Status = me.First().Type switch
         {
             ErrorType.Validation => StatusCodes.Status400BadRequest,
             ErrorType.NotFound => StatusCodes.Status404NotFound,

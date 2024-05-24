@@ -15,7 +15,7 @@ public sealed class GetProductByCategoryEndPoint : ICarterModule
 
             return res.Match(
                 value => Results.Ok(value),
-             error => Results.Problem(HandledExceptionResponse.Create(error, "GetProductByCategory"))
+             error => Results.Problem(error.ToProblemDetail("GetProductByCategory"))
             );
         })
         .WithName("GetProductByCategory")
