@@ -4,4 +4,4 @@ using ErrorOr;
 
 namespace Basket.API.Basket.GetBasket;
 
-public record GetBasketQuery(string userName) : IQuery<ErrorOr<ShoppingCart>>;
+public sealed record GetBasketQuery(string userName) : IQuery<ErrorOr<ShoppingCart>>;

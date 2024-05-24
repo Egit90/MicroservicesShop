@@ -1,3 +1,4 @@
+
 using BuildingBlocks.Exceptions.Handler;
 using Carter;
 using MediatR;
@@ -8,7 +9,7 @@ public sealed class GetBasketEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("basket/{username}", async (string username, ISender sender) =>
+        app.MapGet("/basket/{username}", async (string username, ISender sender) =>
         {
             var res = await sender.Send(new GetBasketQuery(username));
 
@@ -20,6 +21,6 @@ public sealed class GetBasketEndPoint : ICarterModule
         .WithName("GetBasket")
         .Produces<Guid>(StatusCodes.Status201Created)
         .WithSummary("Get Basket")
-        .WithDescription("Get Basket"); ; ;
+        .WithDescription("Get Basket");
     }
 }
