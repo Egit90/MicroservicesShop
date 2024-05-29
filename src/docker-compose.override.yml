@@ -49,3 +49,21 @@ services:
     restart: always
     ports:
       - "6379:6379"
+  #API
+  basket.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8081;http://+:8080
+      - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=Basketdb;Password=MySu]]erP@ss;User Id=appUser;Include Error Detail=true
+      - ConnectionStrings__Redis=distributedcache:6379
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    depends_on:
+      - basketdb
+      - distributedcache
+    ports:
+      - "6001:8080"
+      - "6061:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/userSecrets:ro
+      - ~/.aspnet/https:/https:ro
