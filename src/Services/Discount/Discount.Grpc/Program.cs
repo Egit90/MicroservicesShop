@@ -10,7 +10,7 @@ builder.Services.AddGrpc();
 
 builder.Services.AddDbContext<DiscountContext>(opt =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseSqlite(builder.Configuration.GetConnectionString("Database"));
 });
 
 
@@ -18,7 +18,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 // should be the first in pipeline.
-app.UseMigration();
+await app.UseMigration(app.Logger);
 app.MapGrpcService<DiscountService>();
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 

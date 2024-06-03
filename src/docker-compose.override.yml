@@ -20,7 +20,7 @@ services:
       - ASPNETCORE_URLS=https://+:8081;http://+:8080
       - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;Password=MySu]]erP@ss;User Id=appUser;Include Error Detail=true
       - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/fromWindows.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/https.pfx
     depends_on:
       - catalogdb
     ports:
@@ -64,6 +64,21 @@ services:
     ports:
       - "6001:8080"
       - "6061:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/userSecrets:ro
+      - ~/.aspnet/https:/https:ro
+  #dicount
+  discount.grpc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTP_PORTS=8081
+      - ConnectionStrings__Database=Data Source=dicountdb.sqlite
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/https.pfx
+    ports:
+      - "6002:8080"
+      - "6062:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/userSecrets:ro
       - ~/.aspnet/https:/https:ro
