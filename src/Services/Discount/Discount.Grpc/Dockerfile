@@ -9,10 +9,10 @@ USER app
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["src/Services/Discount/Discount.Grpc/Discount.Grpc.csproj", "src/Services/Discount/Discount.Grpc/"]
-RUN dotnet restore "src/Services/Discount/Discount.Grpc/Discount.Grpc.csproj"
+COPY ["Services/Discount/Discount.Grpc/Discount.Grpc.csproj", "Services/Discount/Discount.Grpc/"]
+RUN dotnet restore "./Services/Discount/Discount.Grpc/Discount.Grpc.csproj"
 COPY . .
-WORKDIR "/src/src/Services/Discount/Discount.Grpc"
+WORKDIR "/src/Services/Discount/Discount.Grpc"
 RUN dotnet build "Discount.Grpc.csproj" -c $configuration -o /app/build
 
 FROM build AS publish

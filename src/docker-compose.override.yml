@@ -56,11 +56,15 @@ services:
       - ASPNETCORE_URLS=https://+:8081;http://+:8080
       - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=Basketdb;Password=MySu]]erP@ss;User Id=appUser;Include Error Detail=true
       - ConnectionStrings__Redis=distributedcache:6379
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/https.pfx
+      - GrpcSetting__DiscountUrl=https://discount.grpc:8081
+      - Kestrel__Endpoints__Https__Certificate__Password=elie
+      - Kestrel__Endpoints__Https__Certificate__Path=/https/https.pfx
+      - Kestrel__Certificates__Default__Password=elie
+      - Kestrel__Certificates__Default__Path=/https/https.pfx
     depends_on:
       - basketdb
       - distributedcache
+      - discount.grpc
     ports:
       - "6001:8080"
       - "6061:8081"
@@ -74,8 +78,10 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTP_PORTS=8081
       - ConnectionStrings__Database=Data Source=dicountdb.sqlite
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/https.pfx
+      - Kestrel__Endpoints__Https__Certificate__Password=elie
+      - Kestrel__Endpoints__Https__Certificate__Path=/https/https.pfx
+      - Kestrel__Certificates__Default__Password=elie
+      - Kestrel__Certificates__Default__Path=/https/https.pfx
     ports:
       - "6002:8080"
       - "6062:8081"
