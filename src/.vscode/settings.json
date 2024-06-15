@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["ASPNETCORE", "Basketdb", "CQRS", "Mediat", "Scrutor"]
+  "cSpell.words": [
+    "appsettings",
+    "ASPNETCORE",
+    "Basketdb",
+    "CQRS",
+    "distributedcache",
+    "Mediat",
+    "Scrutor"
+  ]
 }

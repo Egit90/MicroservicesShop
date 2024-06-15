@@ -20,7 +20,7 @@ services:
       - ASPNETCORE_URLS=https://+:8081;http://+:8080
       - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;Password=MySu]]erP@ss;User Id=appUser;Include Error Detail=true
       - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/https.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/whttps.pfx
     depends_on:
       - catalogdb
     ports:
@@ -28,7 +28,7 @@ services:
       - "6060:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/userSecrets:ro
-      - ~/.aspnet/https:/https:ro
+      - /home/eliem/https:/https:ro
 
   # Basket
   basketdb:
@@ -52,39 +52,34 @@ services:
   #API
   basket.api:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:8081;http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=Basketdb;Password=MySu]]erP@ss;User Id=appUser;Include Error Detail=true
       - ConnectionStrings__Redis=distributedcache:6379
-      - GrpcSetting__DiscountUrl=https://discount.grpc:8081
-      - Kestrel__Endpoints__Https__Certificate__Password=elie
-      - Kestrel__Endpoints__Https__Certificate__Path=/https/https.pfx
-      - Kestrel__Certificates__Default__Password=elie
-      - Kestrel__Certificates__Default__Path=/https/https.pfx
+      - GrpcSetting__DiscountUrl=https://discount.grpc:443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/whttps.pfx
     depends_on:
       - basketdb
       - distributedcache
       - discount.grpc
     ports:
-      - "6001:8080"
-      - "6061:8081"
+      - "6001:80"
+      - "6061:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/userSecrets:ro
-      - ~/.aspnet/https:/https:ro
+      - /home/eliem/https:/https:ro
   #dicount
   discount.grpc:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTP_PORTS=8081
-      - ConnectionStrings__Database=Data Source=dicountdb.sqlite
-      - Kestrel__Endpoints__Https__Certificate__Password=elie
-      - Kestrel__Endpoints__Https__Certificate__Path=/https/https.pfx
-      - Kestrel__Certificates__Default__Password=elie
-      - Kestrel__Certificates__Default__Path=/https/https.pfx
+      - ASPNETCORE_ENVIRONMENT=Developmen
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ConnectionStrings__Database=Data Source=/home/app/datadicountdb.sqlite
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/whttps.pfx
     ports:
-      - "6002:8080"
-      - "6062:8081"
+      - "6002:80"
+      - "6062:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/userSecrets:ro
-      - ~/.aspnet/https:/https:ro
+      - /home/eliem/https:/https:ro

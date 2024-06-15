@@ -7,6 +7,7 @@ public static class Extensions
     public async static Task<IApplicationBuilder> UseMigration(this IApplicationBuilder app, ILogger logger)
     {
 
+
         try
         {
             using var scope = app.ApplicationServices.CreateScope();
