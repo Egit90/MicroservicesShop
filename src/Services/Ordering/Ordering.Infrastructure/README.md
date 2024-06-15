@@ -1,0 +1,7 @@
+- Infrastructure Layer
+  - Contains Implementations of interfaces defined in the Application and Domain Layers such as
+    - Repository implementation classes.
+    - DataBase Access.
+    - FileSystem Access.
+    - Email Sending.
+    - Web Services.

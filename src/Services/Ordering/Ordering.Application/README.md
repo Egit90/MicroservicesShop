@@ -1,0 +1,4 @@
+- Application Logic "Core Layer"
+  - Classes for Command And Query Handling
+  - Classes for DTO
+  - Interfaces
