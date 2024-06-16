@@ -22,6 +22,7 @@
   - Minimal API
 
 - Dependencies Between Applications.
+
   - The Core Layer
     - Domain Layer:
       - No dependencies.
