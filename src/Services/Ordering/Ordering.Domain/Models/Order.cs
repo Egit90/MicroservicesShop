@@ -22,6 +22,7 @@ public sealed class Order : Aggregate<OrderId>
     }
 
     public static Order Create(OrderId orderId, CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment)
+
     {
         var order = new Order()
         {

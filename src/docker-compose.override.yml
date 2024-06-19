@@ -83,3 +83,12 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/userSecrets:ro
       - /home/eliem/https:/https:ro
+  #Odering
+  OrderDb:
+    container_name: oprderDb
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=MySu]]erP@ss
+    restart: always
+    ports:
+      - "1433:1433"
