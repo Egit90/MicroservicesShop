@@ -30,22 +30,22 @@ internal sealed class InitialData
 
             var Order1 = Order.Create(OrderId.Of(Guid.NewGuid()),
                                       CustomerId.Of(new Guid("1521e8e0-deac-4c99-b1ae-2202a19c640d")),
-                                      OrderName.Of("TestOrder1"),
+                                      OrderName.Of("Order"),
                                       address1,
                                       address1, payment1);
 
-            Order1.Add(ProductId.Of(new Guid("65bf5365-de92-9220-58b7-0478d52198ab")), 2, 500);
+            Order1.Add(ProductId.Of(new Guid("65bf5365-de92-9220-58b7-0478d52198ab")), 1, 500);
 
 
 
             var Order2 = Order.Create(OrderId.Of(Guid.NewGuid()),
                                       CustomerId.Of(new Guid("5f5113e9-061a-4663-9a06-32144d5d749e")),
-                                      OrderName.Of("TestOrder2"),
+                                      OrderName.Of("ttttt"),
                                       address2,
                                       address2,
                                       payment2);
 
-            Order1.Add(ProductId.Of(new Guid("542a66e0-d728-dd7f-55f4-c1397f79e1a4")), 1, 450);
+            Order2.Add(ProductId.Of(new Guid("542a66e0-d728-dd7f-55f4-c1397f79e1a4")), 1, 450);
 
             return [Order1, Order2];
         }
