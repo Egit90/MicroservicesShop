@@ -6,9 +6,9 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/Services/Basket/Basket.API/bin/Debug/net8.0/Basket.API.dll",
+      "program": "${workspaceFolder}/Services/Ordering/Ordering.API/bin/Debug/net8.0/Ordering.API.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/Services/Basket/Basket.API",
+      "cwd": "${workspaceFolder}/Services/Ordering/Ordering.API",
       "stopAtEntry": false,
       "serverReadyAction": {
         "action": "openExternally",

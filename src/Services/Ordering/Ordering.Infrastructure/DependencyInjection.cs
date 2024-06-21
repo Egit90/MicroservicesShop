@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Infrastructure.Data;
@@ -13,9 +15,13 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("DataBase")
                                 ?? throw new Exception("Ordering api is missing the connection string");
 
-        services.AddDbContext<ApplicationDbContext>(opts =>
+
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+
+        services.AddDbContext<ApplicationDbContext>((sp, opts) =>
         {
-            opts.AddInterceptors(new AuditableEntityInterceptor());
+            opts.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             opts.UseSqlServer(connectionString);
         });
 
