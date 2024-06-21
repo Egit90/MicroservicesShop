@@ -5,3 +5,4 @@
     - FileSystem Access.
     - Email Sending.
     - Web Services.
+    - Implements the IApplicationDbContext that is created in the Application Layer.

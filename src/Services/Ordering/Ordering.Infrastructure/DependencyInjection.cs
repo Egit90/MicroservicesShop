@@ -1,10 +1,11 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Infrastructure.Data;
 using Ordering.Infrastructure.Data.Interceptors;
+
+using Ordering.Application.Data;
 
 namespace Ordering.Infrastructure;
 
@@ -25,6 +26,7 @@ public static class DependencyInjection
             opts.UseSqlServer(connectionString);
         });
 
+        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         return services;
     }
 
