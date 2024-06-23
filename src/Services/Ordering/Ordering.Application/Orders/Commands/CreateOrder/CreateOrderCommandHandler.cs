@@ -6,13 +6,13 @@ using Ordering.Domain.ValueObjects;
 
 namespace Ordering.Application.Orders.Commands.CreateOrder;
 
-public sealed class CreateOrderCommandHandler(IApplicationDbContext context) : ICommandHandler<CreateOrderCommand, CreateOrderResult>
+public sealed class CreateOrderCommandHandler(IApplicationDbContext context) : ICommandHandler<CreateOrderCommand, Guid>
 {
-    public async Task<CreateOrderResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
         var order = CreateNewOrder(request.Order);
         await context.SaveChangesAsync(cancellationToken);
-        return new CreateOrderResult(order.Id.Value);
+        return order.Id.Value;
     }
 
 

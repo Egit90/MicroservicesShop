@@ -1,7 +1,7 @@
 using BuildingBlocks.CQRS;
 using Ordering.Application.Data;
 using Ordering.Application.Dtos;
-using Ordering.Application.Orders.Exceptions;
+using Ordering.Application.Exceptions;
 using Ordering.Domain.Models;
 using Ordering.Domain.ValueObjects;
 
