@@ -5,6 +5,6 @@ using Ordering.Application.Exceptions;
 using Ordering.Domain.Models;
 using Ordering.Domain.ValueObjects;
 
-namespace Ordering.Application.Orders.Queries;
+namespace Ordering.Application.Orders.Queries.GetOrdersByName;
 
 public sealed record GetOrdersByNameQuery(string orderName) : IQuery<IEnumerable<OrderDto>>;

@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Ordering.Application.Orders.Queries;
+namespace Ordering.Application.Orders.Queries.GetOrdersByName;
 
 public sealed class GetOrdersByNameQueryValidator : AbstractValidator<GetOrdersByNameQuery>
 {
