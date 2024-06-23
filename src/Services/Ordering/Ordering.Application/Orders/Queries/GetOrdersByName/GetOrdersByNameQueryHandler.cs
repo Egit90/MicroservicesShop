@@ -16,7 +16,7 @@ public sealed class GetOrdersByNameQueryHandler(IApplicationDbContext context) :
                     .Include(x => x.OrderItems)
                     .AsNoTracking()
                     .Where(x => x.OrderName.Value.Contains(request.orderName))
-                    .OrderBy(x => x.OrderName)
+                    .OrderBy(x => x.OrderName.Value)
                     .ToListAsync(cancellationToken: cancellationToken)
                     ?? throw new OrderNotFoundException(Guid.Empty);
 

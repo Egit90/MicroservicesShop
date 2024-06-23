@@ -2,10 +2,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (web)",
+      "name": "Order Api",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
+      "launchSettingsProfile": "https",
+      "launchBrowser": {
+        "enabled": false
+      },
       "program": "${workspaceFolder}/Services/Ordering/Ordering.API/bin/Debug/net8.0/Ordering.API.dll",
       "args": [],
       "cwd": "${workspaceFolder}/Services/Ordering/Ordering.API",

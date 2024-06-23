@@ -26,9 +26,9 @@ public static class DatabaseExtensions
 
     private static async Task SeedCustomerAsync(ApplicationDbContext context)
     {
-        if (!await context.customers.AnyAsync())
+        if (!await context.Customers.AnyAsync())
         {
-            await context.customers.AddRangeAsync(InitialData.Customers);
+            await context.Customers.AddRangeAsync(InitialData.Customers);
             await context.SaveChangesAsync();
         }
     }

@@ -1,8 +1,8 @@
 // Ordering API
 using Ordering.API;
-using Ordering.Application;
 using Ordering.Infrastructure;
 using Ordering.Infrastructure.Data.Extensions;
+using Ordering.Application;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services

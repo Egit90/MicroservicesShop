@@ -11,10 +11,11 @@ public sealed record GetOrdersByCustomerQueryHandler(IApplicationDbContext conte
 {
     public async Task<IEnumerable<OrderDto>> Handle(GetOrdersByCustomerQuery request, CancellationToken cancellationToken)
     {
+        var customer = CustomerId.Of(request.CustomerId);
         var orders = await context.Orders
                     .Include(x => x.OrderItems)
                     .AsNoTracking()
-                    .Where(x => x.CustomerId == CustomerId.Of(request.CustomerId))
+                    .Where(x => x.CustomerId == customer)
                     .OrderBy(x => x.OrderName.Value)
                     .ToListAsync(cancellationToken: cancellationToken);
 

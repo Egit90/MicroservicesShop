@@ -6,6 +6,6 @@ public sealed class GetOrdersByCustomerQueryValidator : AbstractValidator<GetOrd
 {
     public GetOrdersByCustomerQueryValidator()
     {
-        RuleFor(x => x.customer).NotEmpty();
+        RuleFor(x => x.CustomerId).NotEmpty();
     }
 }

@@ -11,6 +11,8 @@ public sealed class CreateOrderCommandHandler(IApplicationDbContext context) : I
     public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
         var order = CreateNewOrder(request.Order);
+
+        context.Orders.Add(order);
         await context.SaveChangesAsync(cancellationToken);
         return order.Id.Value;
     }
