@@ -24,7 +24,7 @@ public class BasketCheckOutEventHandler(ISender sender, ILogger<BasketCheckOutEv
 
         var orderId = Guid.NewGuid();
 
-        var orderDto = new OrderDto(orderId, message.CustomerId, message.UserName, addressDto, addressDto, paymentDto, Ordering.Domain.Enums.OrderStatus.Pending,
+        var orderDto = new OrderDto(orderId, message.CustomerId, "ord-1", addressDto, addressDto, paymentDto, Ordering.Domain.Enums.OrderStatus.Pending,
         [
             new OrderItemDto(orderId,new Guid("65bf5365-de92-9220-58b7-0478d52198ab") , 2 ,500 ),
             new OrderItemDto(orderId,new Guid("2da61073-27f4-a095-bedc-7100ad1ba37e") , 1 , 400)
