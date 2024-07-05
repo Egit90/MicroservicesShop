@@ -59,10 +59,14 @@ services:
       - GrpcSetting__DiscountUrl=https://discount.grpc:443
       - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/whttps.pfx
+      - MessageBroker__Host=amqp://ecommerce-mq:5672
+      - messagebroker__UserName=guest
+      - messagebroker__UserPassword=guest
     depends_on:
       - basketdb
       - distributedcache
       - discount.grpc
+      - messagebroker
     ports:
       - "6001:80"
       - "6061:443"
