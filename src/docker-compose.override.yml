@@ -16,7 +16,7 @@ services:
 
   catalog.api:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=https://+:8081;http://+:8080
       - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;Password=MySu]]erP@ss;User Id=appUser;Include Error Detail=true
       - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
@@ -61,7 +61,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/whttps.pfx
       - MessageBroker__Host=amqp://ecommerce-mq:5672
       - messagebroker__UserName=guest
-      - messagebroker__UserPassword=guest
+      - MessageBroker__Password=guest
     depends_on:
       - basketdb
       - distributedcache
@@ -76,7 +76,7 @@ services:
   #dicount
   discount.grpc:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Developmen
+      - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionStrings__Database=Data Source=/home/app/datadicountdb.sqlite
       - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
@@ -96,6 +96,29 @@ services:
     restart: always
     ports:
       - "1433:1433"
+
+  ordering.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      # - ASPNETCORE_HTTP_PORTS=8080
+      # - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ConnectionStrings__Database=Server=OrderDb;Database=OrderDb;User Id=sa;Password=MySu]]erP@ss;Encrypt=False;TrustServerCertificate=True
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/whttps.pfx
+      - MessageBroker__Host=amqp://ecommerce-mq:5672
+      - MessageBroker__UserName=guest
+      - MessageBroker__Password=guest
+      - FeatureManagement__OrderFullfilment=false
+    depends_on:
+      - OrderDb
+      - messagebroker
+    ports:
+      - "6003:80"
+      - "6063:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/userSecrets:ro
+      - /home/eliem/https:/https:ro
 
   #RabbitMq
   messagebroker:
