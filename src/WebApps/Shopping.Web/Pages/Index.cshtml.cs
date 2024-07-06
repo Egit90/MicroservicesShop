@@ -1,19 +1,20 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shopping.Web.Models.Catalog;
+using Shopping.Web.Services;
 
 namespace Shopping.Web.Pages;
 
-public class IndexModel : PageModel
+public class IndexModel(ICatalogService catalogService, ILogger<IndexModel> logger) : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    public IEnumerable<ProductModel> ProductList { get; set; } = [];
 
-    public IndexModel(ILogger<IndexModel> logger)
-    {
-        _logger = logger;
-    }
-
-    public void OnGet()
+    public async Task<IActionResult> OnGetAsync()
     {
 
+        logger.LogInformation("Index Paged");
+        ProductList = await catalogService.GetProducts();
+
+        return Page();
     }
 }
