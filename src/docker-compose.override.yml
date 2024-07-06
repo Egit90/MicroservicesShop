@@ -131,3 +131,22 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+
+  #Yarp Reverse proxy
+  yarpapigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=local
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=elie
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/whttps.pfx
+
+    depends_on:
+      - catalog.api
+      - basket.api
+      - ordering.api
+    ports:
+      - "6004:80"
+      - "6064:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - /home/eliem/https:/https:ro
