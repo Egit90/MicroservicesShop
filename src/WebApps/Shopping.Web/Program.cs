@@ -1,7 +1,16 @@
+using Refit;
+using Shopping.Web.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddRefitClient<ICatalogService>()
+                .ConfigureHttpClient(x =>
+                {
+                    x.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"] ??
+                                            throw new Exception("Can't Find Base Gateway Address"));
+                });
 
 var app = builder.Build();
 
