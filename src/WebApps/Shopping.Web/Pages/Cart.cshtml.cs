@@ -21,7 +21,7 @@ public class CartModel(IBasketService basketService, ILogger<CartModel> logger) 
 
         cart.Items.RemoveAll(x => x.ProductId == productId);
 
-        await basketService.StoreBasket(cart);
+        await basketService.StoreBasket(new StoreBasketRequest(cart));
         return RedirectToPage();
     }
 
