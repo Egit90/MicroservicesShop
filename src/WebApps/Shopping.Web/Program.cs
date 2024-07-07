@@ -5,12 +5,27 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+var ApiGateWay = builder.Configuration["ApiSettings:GatewayAddress"]
+                ?? throw new Exception("Can't Find Base Gateway Address");
+
 builder.Services.AddRefitClient<ICatalogService>()
                 .ConfigureHttpClient(x =>
                 {
-                    x.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"] ??
-                                            throw new Exception("Can't Find Base Gateway Address"));
+                    x.BaseAddress = new Uri(ApiGateWay);
                 });
+
+
+builder.Services.AddRefitClient<IBasketService>()
+                .ConfigureHttpClient(x =>
+{
+    x.BaseAddress = new Uri(ApiGateWay);
+});
+
+builder.Services.AddRefitClient<IOrderingService>()
+                .ConfigureHttpClient(x =>
+{
+    x.BaseAddress = new Uri(ApiGateWay);
+});
 
 var app = builder.Build();
 
@@ -18,7 +33,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

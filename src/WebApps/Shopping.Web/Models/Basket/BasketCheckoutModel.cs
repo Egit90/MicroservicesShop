@@ -22,7 +22,3 @@ public sealed class BasketCheckoutModel
     public string CVV { get; set; } = default!;
     public int PaymentMethod { get; set; } = default!;
 }
-
-// wrapper classes
-public record CheckoutBasketRequest(BasketCheckoutModel BasketCheckoutDto);
-public record CheckoutBasketResponse(bool IsSuccess);

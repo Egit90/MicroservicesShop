@@ -19,7 +19,7 @@ public sealed class ShoppingCartItemModel
 
 // Wrappers 
 
-public record GetBasketResponse(ShoppingCartModel cart);
-public record StoreBasketRequest(ShoppingCartModel basket);
-public record StoreBasketResponse(string UserName);
-public record DeleteBasketResponse(bool isSuccess);
+// public record GetBasketResponse(ShoppingCartModel cart);
+// public record StoreBasketRequest(ShoppingCartModel basket);
+// public record StoreBasketResponse(string UserName);
+// public record DeleteBasketResponse(bool isSuccess);
