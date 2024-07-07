@@ -11,6 +11,6 @@ public sealed class GetBasketQueryHandler(IBasketRepository repository) : IQuery
     public async Task<ErrorOr<ShoppingCart>> Handle(GetBasketQuery request, CancellationToken cancellationToken)
     {
         // get basket from Marten
-        return await repository.GetBasket(request.userName, cancellationToken); ;
+        return await repository.GetBasket(request.userName, cancellationToken);
     }
 }

@@ -16,7 +16,11 @@ public sealed class CashedBasketRepository(IBasketRepository repository, IDistri
             return JsonSerializer.Deserialize<ShoppingCart>(cachedBasket)!;
         }
         var basket = await repository.GetBasket(username, cancellationToken);
-        await cache.SetStringAsync(username, JsonSerializer.Serialize(basket), cancellationToken);
+
+        if (!basket.IsError)
+        {
+            await cache.SetStringAsync(username, JsonSerializer.Serialize(basket), cancellationToken);
+        }
         return basket;
     }
 
