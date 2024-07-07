@@ -36,7 +36,7 @@ public class IndexModel(ICatalogService catalogService, IBasketService basketSer
             Color = "Black"
         });
 
-        await basketService.StoreBasket(basket);
+        await basketService.StoreBasket(new StoreBasketRequest(basket));
 
         return Redirect("Cart");
     }

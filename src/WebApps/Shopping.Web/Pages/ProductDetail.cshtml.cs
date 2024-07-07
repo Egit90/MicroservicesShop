@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shopping.Web.Models.Basket;
 using Shopping.Web.Models.Catalog;
 using Shopping.Web.Services;
 
@@ -35,8 +36,12 @@ public class ProductDetailModel(ICatalogService catalogService, IBasketService b
             Color = "Black"
         });
 
-        await basketService.StoreBasket(basket);
+        var request = new StoreBasketRequest(basket);
+
+        await basketService.StoreBasket(request);
 
         return Redirect("ShoppingCart");
     }
 }
+
+

@@ -10,7 +10,7 @@ public interface IBasketService
     Task<ShoppingCartModel> GetBasket(string userName);
 
     [Post("/basket-service/basket")]
-    Task<string> StoreBasket(ShoppingCartModel request);
+    Task<string> StoreBasket(StoreBasketRequest Cart);
 
     [Delete("/basket-service/basket/{userName}")]
     Task<bool> DeleteBasket(string userName);
