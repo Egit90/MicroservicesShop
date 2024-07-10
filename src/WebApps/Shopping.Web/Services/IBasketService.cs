@@ -1,22 +1,23 @@
 using System.Net;
 using Refit;
 using Shopping.Web.Models.Basket;
+using Shopping.Web.Pages;
 
 namespace Shopping.Web.Services;
 
 public interface IBasketService
 {
-    [Get("/basket-service/basket/{userName}")]
+    [Get("/basket/{userName}")]
     Task<ShoppingCartModel> GetBasket(string userName);
 
-    [Post("/basket-service/basket")]
+    [Post("/basket")]
     Task<string> StoreBasket(StoreBasketRequest Cart);
 
-    [Delete("/basket-service/basket/{userName}")]
+    [Delete("/basket/{userName}")]
     Task<bool> DeleteBasket(string userName);
 
-    [Post("/basket-service/basket/checkout")]
-    Task<bool> CheckoutBasket(BasketCheckoutModel request);
+    [Post("/basket/checkout")]
+    Task<bool> CheckoutBasket(createOrderRequest Order);
 
     public async Task<ShoppingCartModel> LoadUserBasket()
     {

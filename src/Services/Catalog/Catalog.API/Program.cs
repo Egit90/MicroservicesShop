@@ -2,6 +2,7 @@ using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
 using Carter;
 using Catalog.API.Data;
+using Catalog.API.Services;
 using FluentValidation;
 using HealthChecks.UI.Client;
 using Marten;
@@ -11,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to container
+builder.Services.AddGrpc();
+
 builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>
 {
@@ -44,6 +47,7 @@ builder.Services.AddHealthChecks()
 var app = builder.Build();
 
 // http pipeline
+app.MapGrpcService<PriceService>();
 app.MapCarter();
 
 app.UseExceptionHandler(opt => { });

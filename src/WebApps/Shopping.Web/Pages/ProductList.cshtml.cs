@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shopping.Web.Extensions;
 using Shopping.Web.Models.Basket;
 using Shopping.Web.Models.Catalog;
 using Shopping.Web.Services;
@@ -31,20 +32,15 @@ public class ProductListModel(ICatalogService catalogService, IBasketService bas
     public async Task<IActionResult> OnPostAddToCartAsync(Guid productId)
     {
         logger.LogInformation("Adding To Cart");
-        var productRes = await catalogService.GetProduct(productId);
+
         var basket = await basketService.LoadUserBasket();
 
-        basket.Items.Add(new()
-        {
-            ProductId = productId,
-            ProductName = productRes.Name,
-            Price = productRes.Price,
-            Quantity = 1,
-            Color = "Black"
-        });
+        var isAdded = await basket.AddToCart(productId, catalogService);
 
-        await basketService.StoreBasket(new StoreBasketRequest(basket));
+        var request = new StoreBasketRequest(basket);
 
-        return Redirect("ShoppingCart");
+        await basketService.StoreBasket(request);
+
+        return RedirectToPage("Cart");
     }
 }

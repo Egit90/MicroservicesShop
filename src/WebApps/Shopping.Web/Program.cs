@@ -18,7 +18,7 @@ builder.Services.AddRefitClient<ICatalogService>()
 builder.Services.AddRefitClient<IBasketService>()
                 .ConfigureHttpClient(x =>
 {
-    x.BaseAddress = new Uri(ApiGateWay);
+    x.BaseAddress = new Uri("https://localhost:5051");
 });
 
 builder.Services.AddRefitClient<IOrderingService>()

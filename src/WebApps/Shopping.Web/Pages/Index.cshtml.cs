@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shopping.Web.Extensions;
 using Shopping.Web.Models.Basket;
 using Shopping.Web.Models.Catalog;
 using Shopping.Web.Services;
@@ -21,24 +22,17 @@ public class IndexModel(ICatalogService catalogService, IBasketService basketSer
 
     public async Task<IActionResult> OnPostAddToCartAsync(Guid productID)
     {
-        logger.LogInformation("Adding Item To Cart");
-
-        var productRes = await catalogService.GetProduct(productID);
+        logger.LogInformation("Adding To Cart");
 
         var basket = await basketService.LoadUserBasket();
 
-        basket.Items.Add(new ShoppingCartItemModel
-        {
-            ProductId = productID,
-            ProductName = productRes.Name,
-            Price = productRes.Price,
-            Quantity = 1,
-            Color = "Black"
-        });
+        var isAdded = await basket.AddToCart(productID, catalogService);
 
-        await basketService.StoreBasket(new StoreBasketRequest(basket));
+        var request = new StoreBasketRequest(basket);
 
-        return Redirect("Cart");
+        await basketService.StoreBasket(request);
+
+        return RedirectToPage("Cart");
     }
 
 

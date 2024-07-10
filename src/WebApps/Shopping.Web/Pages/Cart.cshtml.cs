@@ -19,7 +19,7 @@ public class CartModel(IBasketService basketService, ILogger<CartModel> logger) 
         logger.LogInformation("Removing Cart");
         var cart = await basketService.LoadUserBasket();
 
-        cart.Items.RemoveAll(x => x.ProductId == productId);
+        int itemsRemoved = cart.Items.RemoveAll(x => x.ProductId == productId);
 
         await basketService.StoreBasket(new StoreBasketRequest(cart));
         return RedirectToPage();

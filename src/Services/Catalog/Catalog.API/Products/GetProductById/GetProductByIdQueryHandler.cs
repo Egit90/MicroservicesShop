@@ -19,4 +19,5 @@ public sealed class GetProductByIdQueryHandler(IDocumentSession _session) : IQue
 
         return product;
     }
+
 }

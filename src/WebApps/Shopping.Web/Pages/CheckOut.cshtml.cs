@@ -4,7 +4,7 @@ using Shopping.Web.Models.Basket;
 using Shopping.Web.Services;
 
 namespace Shopping.Web.Pages;
-
+public sealed record createOrderRequest(BasketCheckoutModel BasketCheckoutDto);
 public class CheckOutModel(IBasketService basketService, ILogger<ProductDetailModel> logger) : PageModel
 {
     [BindProperty] public BasketCheckoutModel Order { get; set; } = default!;
@@ -31,7 +31,7 @@ public class CheckOutModel(IBasketService basketService, ILogger<ProductDetailMo
         Order.UserName = Cart.UserName;
         Order.TotalPrice = Cart.TotalPrice;
 
-        await basketService.CheckoutBasket(Order);
+        await basketService.CheckoutBasket(new createOrderRequest(Order));
 
         return RedirectToPage("Confirmation", "OrderSubmitted");
     }

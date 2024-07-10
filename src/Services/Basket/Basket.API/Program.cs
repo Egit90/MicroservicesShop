@@ -9,6 +9,7 @@ using Marten;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using BuildingBlocks.Messaging;
 using BuildingBlocks.Messaging.MassTransit;
+using Catalog.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +54,19 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
         ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
     };
 });
+
+
+builder.Services.AddGrpcClient<PriceProtoService.PriceProtoServiceClient>(opts =>
+{
+    opts.Address = new Uri(builder.Configuration["GrpcSetting:Product"]!);
+}).ConfigurePrimaryHttpMessageHandler(() =>
+{
+    return new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
+});
+
 
 
 // MassTransit
